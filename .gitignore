@@ -1,0 +1,39 @@
+# Godot-generated data
+.godot/
+*.import
+/android/
+
+# Exported builds and temporary output
+/build/
+/tmp/
+/output/
+*.exe
+*.pck
+*.zip
+*.7z
+*.tpz
+
+# Local logs and editor/tool state
+*.log
+/.agents/
+/tools/generate_resume_pdf.py
+/tools/playit/*.exe
+
+# Local or non-redistributable music. Keep the gameplay/chart code public,
+# then provide audio you have permission to use at these paths locally.
+/assets/audio/music/televisor_pinup.mp3
+/assets/rhythm/aiae/aiae.mp3
+
+# The Quaternius download contains the same models in Blend, FBX and OBJ.
+# Track only the five FBX files referenced by the game plus the license.
+/assets/models/weapons/quaternius/Blends/
+/assets/models/weapons/quaternius/OBJ/
+/assets/models/weapons/quaternius/Preview.jpg
+/assets/models/weapons/quaternius/FBX/*
+!/assets/models/weapons/quaternius/FBX/AssaultRifle_1.fbx
+!/assets/models/weapons/quaternius/FBX/SubmachineGun_2.fbx
+!/assets/models/weapons/quaternius/FBX/Shotgun_1.fbx
+!/assets/models/weapons/quaternius/FBX/Revolver_2.fbx
+!/assets/models/weapons/quaternius/FBX/Accessories/
+/assets/models/weapons/quaternius/FBX/Accessories/*
+!/assets/models/weapons/quaternius/FBX/Accessories/Bayonet.fbx

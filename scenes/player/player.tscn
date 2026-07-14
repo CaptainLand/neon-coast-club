@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/player/first_person_arms.gd" id="2"]
+[sub_resource type="CapsuleShape3D" id="Capsule"]
+radius = 0.36
+height = 1.75
+
+[sub_resource type="StandardMaterial3D" id="HandMaterial"]
+albedo_color = Color(0.74, 0.56, 0.82, 1)
+roughness = 0.28
+metallic = 0.12
+emission_enabled = true
+emission = Color(0.15, 0.05, 0.22, 1)
+emission_energy_multiplier = 0.35
+
+[sub_resource type="SphereMesh" id="HandMesh"]
+material = SubResource("HandMaterial")
+radius = 0.12
+height = 0.24
+radial_segments = 20
+rings = 10
+
+[sub_resource type="CapsuleMesh" id="BodyMesh"]
+radius = 0.34
+height = 1.18
+radial_segments = 20
+rings = 8
+
+[sub_resource type="SphereMesh" id="HeadMesh"]
+radius = 0.29
+height = 0.58
+radial_segments = 20
+rings = 10
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1")
+floor_max_angle = 0.785398
+floor_snap_length = 0.35
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.875, 0)
+shape = SubResource("Capsule")
+
+[node name="ThirdPersonBody" type="Node3D" parent="."]
+visible = false
+
+[node name="Torso" type="MeshInstance3D" parent="ThirdPersonBody"]
+position = Vector3(0, 1.05, 0)
+mesh = SubResource("BodyMesh")
+
+[node name="HeadVisual" type="MeshInstance3D" parent="ThirdPersonBody"]
+position = Vector3(0, 1.88, 0)
+mesh = SubResource("HeadMesh")
+[node name="Head" type="Node3D" parent="."]
+position = Vector3(0, 1.62, 0)
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 78.0
+near = 0.05
+[node name="InteractionRayCast3D" type="RayCast3D" parent="Head/Camera3D"]
+target_position = Vector3(0, 0, -3.4)
+collision_mask = 1
+collide_with_areas = true
+collide_with_bodies = true
+
+[node name="HandPivot" type="Node3D" parent="Head/Camera3D"]
+position = Vector3(0.38, -0.31, -0.88)
+rotation = Vector3(-0.12, -0.18, 0.0)
+
+[node name="SphereHand" type="MeshInstance3D" parent="Head/Camera3D/HandPivot"]
+mesh = SubResource("HandMesh")
+cast_shadow = 0
+visible = true
+
+[node name="FirstPersonArms" type="Node3D" parent="Head/Camera3D/HandPivot"]
+script = ExtResource("2")
+visible = false
+process_mode = 4
+
+[node name="HeldItemRoot" type="Node3D" parent="Head/Camera3D/HandPivot"]
+position = Vector3(-0.05, 0.12, -0.11)
+scale = Vector3(0.7, 0.7, 0.7)
+
+[node name="WeaponRoot" type="Node3D" parent="Head/Camera3D"]
+position = Vector3(0.34, -0.34, -0.78)
+
+[node name="WeaponModel" type="Node3D" parent="Head/Camera3D/WeaponRoot"]
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="Head/Camera3D/WeaponRoot"]
+position = Vector3(-0.02, 0.04, -0.82)
+light_color = Color(1, 0.55, 0.22, 1)
+light_energy = 0.0
+omni_range = 3.5
+shadow_enabled = false
+
+[node name="WeaponAudio" type="AudioStreamPlayer3D" parent="Head/Camera3D/WeaponRoot"]
+max_distance = 48.0
+volume_db = -2.0
